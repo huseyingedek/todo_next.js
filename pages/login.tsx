@@ -1,20 +1,52 @@
 import React from 'react';
+import { LockIcon } from 'lucide-react';
 import { LoginForm } from '@/Core/index';
-import Link from 'next/link';
 
 const Login = () => {
+
+
     return (
-        <div className='relative h-screen flex justify-center items-center bg-cover bg-center bg-no-repeat' style={{ backgroundImage: "url('/images/asd.jpg')" }}>
-            <div className='absolute inset-0 bg-black opacity-50'></div>
-            <div className='relative z-10 flex flex-col justify-center items-center bg-gray-100 bg-opacity-90 p-8 rounded-lg shadow-lg'>
-                <h1 className='text-4xl text-blue-900 font-bold mb-8'>Giriş Yap</h1>
+        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-500 to-purple-600">
+            <div className="w-full max-w-md px-8 py-10 bg-white rounded-2xl shadow-2xl transform transition-all">
+                <div className="flex flex-col items-center justify-center">
+                    <div className="bg-blue-100 p-3 rounded-full mb-4">
+                        <LockIcon className="h-6 w-6 text-blue-600" />
+                    </div>
+                    <h1 className="text-3xl font-bold text-gray-800 mb-2">Hoş Geldiniz</h1>
+                    <p className="text-gray-500 text-sm mb-8">Hesabınıza giriş yapın</p>
+                </div>
+
                 <LoginForm />
-                <p className='mt-4'>
-                    Hesabınız yok mu?{' '}
-                    <Link href="/register" legacyBehavior>
-                        <a className='text-blue-500 hover:underline'>Kayıt Ol</a>
-                    </Link>
-                </p>
+
+                <div className="mt-8 space-y-4">
+                    <div className="relative">
+                        <div className="absolute inset-0 flex items-center">
+                            <div className="w-full border-t border-gray-200"></div>
+                        </div>
+                        <div className="relative flex justify-center text-sm">
+                            <span className="px-2 bg-white text-gray-500">veya</span>
+                        </div>
+                    </div>
+
+                    <p className="text-center text-sm">
+                        <span className="text-gray-500">Hesabınız yok mu? </span>
+                        <a
+                            href="/register"
+                            className="font-semibold text-blue-600 hover:text-blue-800 transition-colors"
+                        >
+                            Hemen Kayıt Olun
+                        </a>
+                    </p>
+                </div>
+
+                <div className="mt-6 text-center">
+                    <a
+                        href="/forgot-password"
+                        className="text-sm text-gray-500 hover:text-gray-700 transition-colors"
+                    >
+                        Şifrenizi mi unuttunuz?
+                    </a>
+                </div>
             </div>
         </div>
     );

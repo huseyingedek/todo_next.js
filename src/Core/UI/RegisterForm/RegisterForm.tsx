@@ -1,91 +1,79 @@
-import React from 'react';
-import type { FormProps } from 'antd';
-import { Button, Form, Input } from 'antd';
+import React, { useState } from 'react';
 
-type FieldType = {
-  username?: string;
-  email?: string;
-  password?: string;
-  confirmPassword?: string;
-};
+const RegisterForm: React.FC = () => {
+  const [formData, setFormData] = useState({
+    username: '',
+    email: '',
+    password: ''
+  });
 
-const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
-  const { confirmPassword, ...rest } = values;
-  console.log('Success:', rest);
-};
+  const handleSubmit = (e: { preventDefault: () => void; }) => {
+    e.preventDefault();
+    console.log('Form submitted:', formData);
+  };
 
-const onFinishFailed: FormProps<FieldType>['onFinishFailed'] = (errorInfo) => {
-  console.log('Failed:', errorInfo);
-};
+  const handleChange = (e: { target: { name: any; value: any; }; }) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
 
-const RegisterForm: React.FC = () => (
-  <Form
-    name="basic"
-    labelCol={{ span: 24 }}
-    style={{ maxWidth: 600 }}
-    initialValues={{ remember: true }}
-    onFinish={onFinish}
-    onFinishFailed={onFinishFailed}
-    autoComplete="off"
-  >
-    <Form.Item<FieldType>
-      label="Username"
-      name="username"
-      rules={[{ required: true, message: 'Please input your username!' }]}
-    >
-      <Input />
-    </Form.Item>
+  return (
+    <form onSubmit={handleSubmit} className="space-y-6">
+      <div>
+        <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-1">
+          Kullanıcı Adı
+        </label>
+        <input
+          type="text"
+          id="username"
+          name="username"
+          value={formData.username}
+          onChange={handleChange}
+          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          required
+        />
+      </div>
 
-    <Form.Item<FieldType>
-      label="Email"
-      name="email"
-      rules={[{ required: true, type: 'email', message: 'Please input a valid email!' }]}
-    >
-      <Input />
-    </Form.Item>
+      <div>
+        <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+          E-posta
+        </label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          value={formData.email}
+          onChange={handleChange}
+          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          required
+        />
+      </div>
 
-    <Form.Item<FieldType>
-      label="Password"
-      name="password"
-      rules={[{ required: true, message: 'Please input your password!' }]}
-    >
-      <Input.Password />
-    </Form.Item>
+      <div>
+        <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
+          Şifre
+        </label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          value={formData.password}
+          onChange={handleChange}
+          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          required
+        />
+      </div>
 
-    <Form.Item<FieldType>
-      label="Confirm Password"
-      name="confirmPassword"
-      dependencies={['password']}
-      rules={[
-        { required: true, message: 'Please confirm your password!' },
-        ({ getFieldValue }) => ({
-          validator(_, value) {
-            if (!value || getFieldValue('password') === value) {
-              return Promise.resolve();
-            }
-            return Promise.reject(new Error('The two passwords do not match!'));
-          },
-        }),
-      ]}
-    >
-      <Input.Password />
-    </Form.Item>
-
-    <Form.Item style={{ textAlign: 'center' }}>
-      <Button
-        type="primary"
-        htmlType="submit"
-        style={{
-          backgroundColor: 'green',
-          borderColor: 'green',
-          transition: 'background-color 0.3s, border-color 0.3s',
-        }}
-        className="hover-button"
+      <button
+        type="submit"
+        className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
       >
         Kayıt Ol
-      </Button>
-    </Form.Item>
-  </Form>
-);
+      </button>
+    </form>
+  );
+};
 
 export default RegisterForm;
